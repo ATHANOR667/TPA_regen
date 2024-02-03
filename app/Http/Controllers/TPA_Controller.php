@@ -15,7 +15,7 @@ use Carbon\Carbon;
 
 
 
-class TPA_Controller extends Controller
+class TPA_Controller extends Auth_Controller
 {
     public function Acceuil()
     {
@@ -115,7 +115,7 @@ class TPA_Controller extends Controller
         $mission->qualification = $request->input(['qualification']);
         $mission->statut=$request->input(['statut']) ;
         $mission->professionnels()->attach($pro->id);
-        $mission->particuliers()->attach($part->id);
+        $mission->particuliers()->attach($part->id);*/
         //mise a jour du nombre de propositions recue/ envoyee chez tous les part et les usr
         DB::table('professionnels')
             ->update([
@@ -130,7 +130,7 @@ class TPA_Controller extends Controller
                                    FROM mission_particulier_professionnel mpp
                                    JOIN missions m ON m.id = mpp.mission_id
                                    WHERE mpp.particulier_id = particuliers.id)')
-            ]);*/
+            ]);
         return to_route('TPA.acceuil_pro',['part'=>$part,'pro'=>$pro])->with('message','Votre mission est desormais en attente ');
     }
 

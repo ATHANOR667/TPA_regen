@@ -87,13 +87,13 @@ class Auth_Controller extends Controller
         Auth::logout();
         return to_route('TPA.acceuil');
     }
-/*
+
     public function inscription_pro()
     {
         return view('TPA.Auth.pro');
     }
 
-    public function inscription_pro_process(TPA_Auth_Pro_Request $request,particulier $part)
+    public function inscription_pro_process(LoginRequest $request,particulier $part)
     {
         try {
             $user = particulier::where('email',$request->validated(['email']))->firstOrFail();
@@ -162,5 +162,6 @@ class Auth_Controller extends Controller
 
     }   */
 
+    }
 }
 

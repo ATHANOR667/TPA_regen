@@ -16,17 +16,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-/*
+
 route::prefix('/TPA')->controller(\App\Http\Controllers\TPA_Controller::class)->name('TPA.')->group(function(){
     /** ACCEUIL */
- /*   Route::get('/','Acceuil')->name('acceuil');
+    Route::get('/','Acceuil')->name('acceuil');
     Route::get('/acceuil','Acceuil')->name('acceuil');
     Route::get('/acceuil-part-{part}','Acceuil_part')->name('acceuil_part');
     Route::get('/acceuil-pro-{pro}-{part}','Acceuil_pro')->name('acceuil_pro');
 
 
     /** CONNEXIONS */
-/*
     Route::get('/login','login')->name('login');
     Route::post('/login','login_process')->name('login_process');
     Route::get('/login-pro-{part}','login_pro')->name('login_pro');
@@ -34,28 +33,28 @@ route::prefix('/TPA')->controller(\App\Http\Controllers\TPA_Controller::class)->
     Route::delete('/logout','logout')->name('logout');
 
 
-    /** INSCRIPTION *//*
+    /** INSCRIPTION */
     Route::get('/inscription','inscription')->name('inscription');
     Route::post('/inscription','inscription_process')->name('inscription_process');
     Route::get('/inscription-pro-{part}','inscription_pro')->name('inscription_pro');
     Route::post('/inscription-pro-{part}','inscription_pro_process')->name('inscription_pro_process');
 
 
-    /** EXPERIENCES *//*
+    /** EXPERIENCES */
     Route::get('/experience-{pro}',[\App\Http\Controllers\TPA_Controller::class,'experience'])->name('experience');
     Route::post('/experience-{pro}',[\App\Http\Controllers\TPA_Controller::class,'exp_process'])->name('experience_process');
     Route::get('/experience-edit-{pro}-{exp}','experience_edit')->name('experience_edit');
     Route::post('/experience-edit-{pro}-{exp}','experience_edit_process')->name('experience_edit_process');
 
 
-    /**  MISSIONS *//*
+    /**  MISSIONS */
     Route::get('/mission-{pro}-{part}','mission')->name('mission');
     Route::post('/mission-{pro}-{part}','mission_process')->name('mission_process');
     Route::get('/mission-edit-{pro}-{part}-{exp}','mission_edit')->name('mission_edit');
     Route::post('/mission-edit-{pro}-{part}-{exp}','mission_edit_process')->name('mission_edit_process');
 
 
-    /** MES OFFRES  *//*
+    /** MES OFFRES  */
     Route::get('mes-offres-{part}','mes_offres')->name('mes_offres');
     Route::get('mes-offres-recues-{pro}','mes_offres_recues')->name('mes_offres_recues');
 
@@ -64,43 +63,26 @@ route::prefix('/TPA')->controller(\App\Http\Controllers\TPA_Controller::class)->
      *
      * SHOW
      */
-/*
+
     Route::get('/liste-pro-{part}-{fonction}','liste_pro')->name('liste_pro');
 
-    /** PROFESSIONEL *//*
+    /** PROFESSIONEL */
     Route::get('/pro_show-{pro}-{part}','pro_show')->name('pro_show');
 
-    /** MISSION *//*
+    /** MISSION */
     Route::get('/mission_show','mission_show')->name('mission_show');
 
-    /** EXPERIENCE*//*
+    /** EXPERIENCE*/
     Route::get('/experience_show','experience_show')->name('experience_show');
 
-    /** EXPERIENCE *//*
+    /** EXPERIENCE */
     Route::get('/part_show-{pro}-{part}','part_show')->name('part_show');
 
 
 
 
 
-});*/
+});
 //php composer.phar require --dev barryvdh/laravel-ide-helper --with-all-dependencies
 //php composer.phar require barryvdh/laravel-debugbar --dev
-Route::get('/TPA/',[\App\Http\Controllers\TPA_Controller::class,'Acceuil'])->name('TPA.acceuil');
-Route::get('/TPA/acceuil',[\App\Http\Controllers\TPA_Controller::class,'Acceuil'])->name('TPA.acceuil');
-Route::get('/TPA/acceuil-part-{part}',[\App\Http\Controllers\TPA_Controller::class,'Acceuil_part'])->name('TPA.acceuil_part');
-Route::get('/TPA/acceuil-pro-{pro}-{part}',[\App\Http\Controllers\TPA_Controller::class,'Acceuil_pro'])->name('TPA.acceuil_pro');
 
-
-/** CONNEXIONS */
-
-    Route::get('/TPA/login',[\App\Http\Controllers\Auth_Controller::class,'login'])->name('TPA.login');
-    Route::post('/TPA/login',[\App\Http\Controllers\Auth_Controller::class,'login_process'])->name('TPA.login_process');
-    Route::delete('/TPA/logout',[\App\Http\Controllers\Auth_Controller::class,'logout'])->name('TPA.logout');
-
-
-    /** INSCRIPTION */
-route::prefix('/TPA')->controller(\App\Http\Controllers\Auth_Controller::class)->name('TPA.')->group(function() {
-    Route::get('/inscription', 'inscription')->name('inscription');
-    Route::post('/inscription',  'inscription_process')->name('inscription_process');
-});
