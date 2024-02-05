@@ -17,13 +17,9 @@ class Auth_Controller extends Controller
         return view('TPA.Auth.part');
     }
 
-    public function inscription_process( Auth_Part_Request $request)
+    public function inscription_process(Auth_Part_Request $request)
     {
-        if ($request->fails()) {
-            return redirect()->back()->withErrors($request->errors())->withInput();
-        }
         $part = $request->validated();
-        dd($part);
         particulier::create([
             'name'=>$part['name'],
             'prenom'=>$part['prenom'],
@@ -35,8 +31,7 @@ class Auth_Controller extends Controller
             'password'=>bcrypt($part['password']),
             'email'=>$part['email']
         ]) ;
-        return redirect('TPA\login')->with('message' ,'Inscription reussie , veuillez voous connecter');
-
+        return redirect(route('TPA.login'))->with('message' ,'Inscription reussie , veuillez voous connecter');
     }
 
     public function login()
@@ -59,7 +54,7 @@ class Auth_Controller extends Controller
         {
             Auth::login($user);
             $request->session()->regenerate();
-            return redirect()->intended(route('TPA.acceuil_part',['part'=>$user->id]));
+            return redirect()->intended(route('TPA.accueil_part',['part'=>$user->id]));
         }
         return redirect()->route('TPA.login')->withErrors([
             'password' => 'Vérifiez votre mot de passe'
@@ -72,7 +67,7 @@ class Auth_Controller extends Controller
 
         if ($credentials) {
             $request->session()->regenerate();
-            return redirect()->intended(route('TPA.acceuil'));
+            return redirect()->intended(route('TPA.accueil'));
         }
         return redirect()->route('TPA.login')->withErrors([
             'email' => 'Vérifiez votre email ',
@@ -85,12 +80,12 @@ class Auth_Controller extends Controller
     public function logout()
     {
         Auth::logout();
-        return to_route('TPA.acceuil');
+        return to_route('TPA.accueil');
     }
 
-    public function inscription_pro()
+    public function inscription_pro(particulier $part)
     {
-        return view('TPA.Auth.pro');
+        return view('TPA.Auth.pro')->with(['part'=>$part]);
     }
 
     public function inscription_pro_process(LoginRequest $request,particulier $part)
@@ -139,7 +134,7 @@ class Auth_Controller extends Controller
         {
             Auth::login($pro);
             $request->session()->regenerate();
-            return redirect()->intended(route('TPA.acceuil_pro',['pro'=>$pro,'part'=>$part]));
+            return redirect()->intended(route('TPA.accueil_pro',['pro'=>$pro,'part'=>$part]));
         }
         return redirect()->route('TPA.login')->withErrors([
             'password' => 'Vérifiez votre mot de passe'
@@ -152,7 +147,7 @@ class Auth_Controller extends Controller
 
         if ($credentials) {
             $request->session()->regenerate();
-            return redirect()->intended(route('TPA.acceuil'));
+            return redirect()->intended(route('TPA.accueil'));
         }
         return redirect()->route('TPA.login')->withErrors([
             'email' => 'Vérifiez votre email ',

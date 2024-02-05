@@ -14,7 +14,7 @@
 
                 <!--  EMAIL -->
                 <div class="input-container2">
-                    <input class="inputc" type="email" name="email" id=""  value="{{@old('email')}}"  required>
+                    <input class="inputc" type="email" name="email" id=""  value="{{old('email')}}"  required>
                     <label class="labelc" for="email">Email</label>
                     @error('email')
                     <span class="error-message" >{{$message}}</span>
@@ -41,7 +41,7 @@
                 <h3 class="h3c"> Pas encore de compte ? :     <a class="h3c" href="{{route('TPA.inscription')}}"> S'inscrire </a> <br></h3>
             @endif
 
-            <a class="h3c" href="{{route('TPA.acceuil')}}">Rester deconnecte</a>
+            <a class="h3c" href="{{route('TPA.accueil')}}">Rester deconnecte</a>
     </form>
 
 @endsection

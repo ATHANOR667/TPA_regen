@@ -9,4 +9,10 @@ class Experience extends Model
 {
     use HasFactory;
     protected $fillable = ['fonction','debut','fin','remuneration','desc_rem','qualification','professionel_id'];
+
+    function professionnel (){
+        return $this->belongsTo(professionnel::class);
+    }
 }
+
+

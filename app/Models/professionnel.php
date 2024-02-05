@@ -16,7 +16,7 @@ class professionnel extends Authenticatable
 
     public function Mission()
     {
-        return $this->belongsToMany(Mission::class,'mission_particulier_professionel');
+        return $this->belongsToMany(Mission::class,'mission_particulier_professionnel');
     }
 
     public function Experience()
@@ -26,7 +26,7 @@ class professionnel extends Authenticatable
 
     public function Particulier()
     {
-        return $this->belongsToMany(particulier::class,'mission_particulier_professionel');
+        return $this->belongsToMany(particulier::class,'mission_particulier_professionnel');
     }
 
     /**

@@ -1,5 +1,5 @@
 @extends('TPA.base')
-@section('title','acceuil etranger')
+@section('title','accueil etranger')
 @section('nav')
     <div>
         <img class="img" src="img/OIP.jpg" alt="">

@@ -26,7 +26,7 @@ class Auth_Part_Request extends FormRequest
             'name'=> ['min:3','max:20','required'],//'regex:/^[a-zA-Z]+$/',
             'prenom'=> ['min:3','max:20','required'],//'regex:/^[a-zA-Z]+$/',
             'date_naiss'=> [],
-            'pays_origne'=>['required'],
+            'pays_origine'=>['required'],
             'ville_habitation' =>['required'],
             'prop_mission' => ['sometimes'],
             'prop_recue' => ['sometimes'],

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Data\TPA_Mission_Request;
+use App\Http\Requests\Data\Mission_Request;
 use App\Http\Requests\Experience_Request;
 use App\Models\Experience;
 use App\Models\Mission;
@@ -17,21 +17,22 @@ use Carbon\Carbon;
 
 class TPA_Controller extends Auth_Controller
 {
-    public function Acceuil()
+    public function accueil()
     {
-        return view('TPA.Pages.Acceuil.guest');
+        return view('TPA.Pages.accueil.guest');
     }
 
-    public function Acceuil_part(particulier $part)
+    public function accueil_part(particulier $part)
     {
         $exps = \App\Models\Experience::select('fonction')->distinct()->get();
-        return view('TPA.Pages.Acceuil.part')->with(['part'=>$part,'exps'=>$exps]);
+        return view('TPA.Pages.accueil.part')->with(['part'=>$part,'exps'=>$exps]);
     }
 
-    public function Acceuil_pro(professionnel $pro , particulier $part)
+    public function accueil_pro(professionnel $pro )
     {
         $exps = $pro->Experience()->get();
-        return view('TPA.Pages.Acceuil.pro')->with(['part'=>$part,'pro'=>$pro,'exps'=>$exps]);
+        //$missions = $pro->Mission()->where('statut','=','en attente');
+        return view('TPA.Pages.accueil.pro')->with(['pro'=>$pro,'exps'=>$exps]);
     }
 
 
@@ -53,16 +54,17 @@ class TPA_Controller extends Auth_Controller
     {
         $part = particulier::where('email','=',$pro->email)->get();
         $exp = $request->validated();
-        Experience::create([
+        $e =Experience::create([
             'fonction'=>$exp['fonction'],
             'debut'=>$exp['debut'],
             'fin'=>$exp['fin'],
             'remuneration'=>$exp['remuneration'],
             'desc_rem'=>$exp['desc_rem'],
             'qualification'=>$exp['qualification'],
-            'professionnel_id'=>$pro->id
         ]);
-        return redirect(route('TPA.acceuil_pro')->with(['part'=>$part,'pro'=>$pro]));//->with('message','Operation reussie');
+        $e->professionnel()->associate($pro);
+        $e->save();
+        return redirect()->route('TPA.accueil_pro',['pro'=>$pro->id]);//->with('message','Operation reussie');
 
     }
 
@@ -81,8 +83,10 @@ class TPA_Controller extends Auth_Controller
         return view('TPA.Data.mission')->with(['part'=>$part,'pro'=>$pro]);
     }
 
-    public function mission_process( professionnel $pro ,particulier $part, TPA_Mission_Request $request)
+    public function mission_process( professionnel $pro ,particulier $part, Mission_Request $request)
     {
+       // dd($request->validated());
+
         $mission = Mission::create([
             'intitule' =>$request->intitule,
             'description' => $request->description,
@@ -94,28 +98,11 @@ class TPA_Controller extends Auth_Controller
             'qualification'=>$request->qualification,
             'statut'=>'en attente'
         ]);
-        /*$request->validate([
-            'intitule' => 'required',
-            'description'=>'required',
-            'fonction'=>'required',
-            'debut'=>'required|date',
-            'fin'=>'required|date',
-            'remuneration'=>'required',
-            'desc_rem'=>'required',
-            'qualification'=>'required',
-            'statut'=>'required'
-        ]);
-        $mission = new Mission();
-        $mission->intitule = $request->input(['intitule']);
-        $mission->description = $request->input(['description']) ;
-        $mission->fonction = $request->input(['fonction']) ;
-        $mission->debut = $request->input(['debut']) ;
-        $mission->fin = $request->input(['fin']) ;
-        $mission->remuneration= $request->input(['remuneration']) ;
-        $mission->qualification = $request->input(['qualification']);
-        $mission->statut=$request->input(['statut']) ;
-        $mission->professionnels()->attach($pro->id);
-        $mission->particuliers()->attach($part->id);*/
+        dd( $mission->professionnel()->sync([$pro->id]));
+        $mission->particulier()->sync([$part->id]);
+
+
+       $mission->save();
         //mise a jour du nombre de propositions recue/ envoyee chez tous les part et les usr
         DB::table('professionnels')
             ->update([
@@ -131,7 +118,7 @@ class TPA_Controller extends Auth_Controller
                                    JOIN missions m ON m.id = mpp.mission_id
                                    WHERE mpp.particulier_id = particuliers.id)')
             ]);
-        return to_route('TPA.acceuil_pro',['part'=>$part,'pro'=>$pro])->with('message','Votre mission est desormais en attente ');
+        return to_route('TPA.accueil_pro',['pro'=>$pro])->with('message','Votre mission est desormais en attente ');
     }
 
     /**
@@ -161,11 +148,11 @@ class TPA_Controller extends Auth_Controller
 
     public  function liste_pro(particulier $part  , $fonction )
     {
-        $professionnels = professionnel::join('experiences', 'professionnels.id', '=', 'experiences.professionnel_id')
+        $pros = professionnel::join('experiences', 'professionnels.id', '=', 'experiences.professionnel_id')
             ->where('experiences.fonction',$fonction)
             ->select('professionnels.*')
             ->get();
-        return view('TPA.Pages.liste_pro')->with(['part'=>$part,'pros'=>$professionnels]);
+        return view('TPA.Pages.liste_pro')->with(['part'=>$part,'pros'=>$pros]);
     }
 
     /**

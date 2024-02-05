@@ -4,7 +4,7 @@ namespace App\Http\Requests\Data;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TPA_Mission_Request extends FormRequest
+class Mission_Request extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,7 @@ class TPA_Mission_Request extends FormRequest
     {
         return [
             'intitule' =>['required','min:4','max:20'],
-            'description' => ['required','min:20','max:150'],
+            'description' => ['required','min:10','max:250'],
             'fonction' => ['required','min:4','max:20'],
             'debut' => ['required'],
             'fin' => ['required'],

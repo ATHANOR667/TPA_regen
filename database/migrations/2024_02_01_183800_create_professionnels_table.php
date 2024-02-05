@@ -35,7 +35,7 @@ return new class extends Migration
 
         Schema::create('mission_particulier_professionnel',function (Blueprint $table){
             $table->foreignIdFor(\App\Models\Mission::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(\App\Models\particulier::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\particulier::class)->nullable()->constrained()->cascadeOnDelete();
             $table->foreignIdFor(\App\Models\professionnel::class)->nullable()->constrained()->cascadeOnDelete();
             $table->primary(['mission_id','particulier_id','professionnel_id']);
             $table->string('Desc_part_par_prof')->nullable();

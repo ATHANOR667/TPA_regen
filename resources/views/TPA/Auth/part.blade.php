@@ -1,20 +1,20 @@
-@extends('TPA.base_form')
+@extends('TPA.base_form',['title'=>'inscription particulier'])
 @section('title','inscription particulier')
 
 @section('content')
-    <form action="{{route('TPA.inscription_process')}}" method="post">
+    <form action="" method="post">
         @csrf
 
         <!-- formulaire connexion -->
 
 
-        <h3 class="h3c">Connexion</h3>
+        <h3 class="h3c">Inscription</h3>
 
         <div class="formc">
 
             <!--  NAME -->
             <div class="input-container2">
-                <input class="inputc" type="text" name="name" id=""  value="{{@old('name')}}"  required>
+                <input class="inputc" type="text" name="name" id=""  value="{{old('name')}}"  required>
                 <label class="labelc" for="name">Nom d'utilisateur</label>
                 @error('name')
                 <span class="error-message" >{{$message}}</span>
@@ -23,7 +23,7 @@
 
             <!--  PRENOM -->
             <div class="input-container2">
-                <input class="inputc" type="text" name="prenom" id=""  value="{{@old('prenom')}}"  required>
+                <input class="inputc" type="text" name="prenom" id=""  value="{{old('prenom')}}"  required>
                 <label class="labelc" for="prenom">Prenom</label>
                 @error('prenom')
                 <span class="error-message" >{{$message}}</span>
@@ -32,7 +32,7 @@
 
             <!--  DATE_NAISS -->
             <div class="input-container2">
-                <input class="inputc" type="date" name="date_naiss" id=""  value="{{@old('date_naiss')}}"  required>
+                <input class="inputc" type="date" name="date_naiss" id=""  value="{{old('date_naiss')}}"  required>
                 @error('date_naiss')
                 <span class="error-message" >{{$message}}</span>
                 @enderror
@@ -100,7 +100,7 @@
 
             <!--  EMAIL -->
             <div class="input-container2">
-                <input class="inputc" type="email" name="email" id=""  value="{{@old('email')}}"  required>
+                <input class="inputc" type="email" name="email" id=""  value="{{old('email')}}"  required>
                 <label class="labelc" for="username">Email</label>
                 @error('email')
                 <span class="error-message" >{{$message}}</span>
@@ -111,7 +111,7 @@
 
 
 
-        <a class="h3c" href="{{route('TPA.acceuil')}}">Rester deconnecte</a>
+        <a class="h3c" href="{{route('TPA.accueil')}}">Rester deconnecte</a>
     </form>
 
 @endsection

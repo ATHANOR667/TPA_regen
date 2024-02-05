@@ -18,11 +18,11 @@ Route::get('/', function () {
 });
 
 route::prefix('/TPA')->controller(\App\Http\Controllers\TPA_Controller::class)->name('TPA.')->group(function(){
-    /** ACCEUIL */
-    Route::get('/','Acceuil')->name('acceuil');
-    Route::get('/acceuil','Acceuil')->name('acceuil');
-    Route::get('/acceuil-part-{part}','Acceuil_part')->name('acceuil_part');
-    Route::get('/acceuil-pro-{pro}-{part}','Acceuil_pro')->name('acceuil_pro');
+    /** ACCUEIL */
+    Route::get('/','accueil')->name('accueil');
+    Route::get('/accueil','accueil')->name('accueil');
+    Route::get('/accueil-part-{part}','accueil_part')->name('accueil_part');
+    Route::get('/accueil-pro-{pro}','accueil_pro')->name('accueil_pro');
 
 
     /** CONNEXIONS */

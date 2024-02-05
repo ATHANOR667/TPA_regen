@@ -28,7 +28,7 @@ class Experience_Request extends FormRequest
             'remuneration' => 'nullable|numeric',
             'desc_rem' => 'nullable|string',
             'qualification' => 'nullable|string|max:255',
-            'professionel_id' => 'required|exists:professionnels,id',
+            'professionnel_id' => '',
         ];
     }
 }
