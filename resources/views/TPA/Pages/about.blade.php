@@ -1,6 +1,8 @@
 @extends('TPA.base')
-@section('title','accueil particulier')
+@section('title','A propos')
+
 @section('nav')
+
     <div>
         <img class="img" src="img/OIP.jpg" alt="">
     </div>
@@ -23,34 +25,12 @@
 @endsection
 
 @section('content')
-    <div class="container">
-        <div class="block4" >
-            @foreach($exps as $exp)
-                <div class="sousbloc8">
-                    <p class="element"><a href="{{route('TPA.liste_pro',['part'=>$part,'fonction'=>$exp->fonction])}}">{{$exp->fonction}}</a></p>
-                </div>
-            @endforeach
-        </div>
-        <div class="block2">
-            <div class="divinfoprofile">
-                <div class="profile"></div>
-                <div class="infoprofil">
-                    <h2>Profile</h2>
-                    <p>Nom : {{$part->name}}</p>
-                    <p>Prenom : {{$part->prenom}}</p>
-                    <p>Notes : {{$part->note}}</p>
-                </div>
-            </div>
-            <div>
-                <h2 class="titlestat">Stat</h2>
-                <div class="stat">
-                    <h3>propositions faites</h3>
-                    <div class="statinfo"><h2>{{$part->prop_mission}}</h2></div>
-                    <h3>proposition acceptee</h3>
-                    <div class="statinfo"><h2>{{$part->prop_acceptee}}</h2></div>
-                </div>
-
-            </div>
-        </div>
-    </div>
+<div class="about-content">
+    <h2>À propos de TPA (The Placement Agency)</h2>
+    <p>TPA est une agence de placement renommée spécialisée dans la recherche et la sélection de talents qualifiés pour les entreprises de divers secteurs.</p>
+    <p>Notre mission est de faciliter la connexion entre les employeurs à la recherche de professionnels compétents et les candidats à la recherche de nouvelles opportunités de carrière.</p>
+    <p>Nous nous engageons à fournir des services de qualité supérieure en mettant en œuvre des processus de recrutement rigoureux et en établissant des relations solides avec nos clients et nos candidats.</p>
+    <p>Que vous soyez une entreprise à la recherche de talents ou un professionnel à la recherche d'un emploi, TPA est là pour vous aider à atteindre vos objectifs.</p>
+    <p>Contactez-nous dès aujourd'hui pour discuter de vos besoins en recrutement ou pour explorer les opportunités de carrière.</p>
+</div>
 @endsection

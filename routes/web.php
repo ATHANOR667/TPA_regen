@@ -24,6 +24,11 @@ route::prefix('/TPA')->controller(\App\Http\Controllers\TPA_Controller::class)->
     Route::get('/accueil-part-{part}','accueil_part')->name('accueil_part');
     Route::get('/accueil-pro-{pro}','accueil_pro')->name('accueil_pro');
 
+    /** ABOUT ET CONTACT  */
+
+    Route::get('/about','about')->name('about');
+    Route::get('/contact','contact')->name('contact');
+
 
     /** CONNEXIONS */
     Route::get('/login','login')->name('login');
@@ -50,13 +55,12 @@ route::prefix('/TPA')->controller(\App\Http\Controllers\TPA_Controller::class)->
     /**  MISSIONS */
     Route::get('/mission-{pro}-{part}','mission')->name('mission');
     Route::post('/mission-{pro}-{part}','mission_process')->name('mission_process');
-    Route::get('/mission-edit-{pro}-{part}-{exp}','mission_edit')->name('mission_edit');
-    Route::post('/mission-edit-{pro}-{part}-{exp}','mission_edit_process')->name('mission_edit_process');
+
 
 
     /** MES OFFRES  */
     Route::get('mes-offres-{part}','mes_offres')->name('mes_offres');
-    Route::get('mes-offres-recues-{pro}','mes_offres_recues')->name('mes_offres_recues');
+    Route::get('offres-{pro}','mes_offres_recues')->name('mes_offres_recues');
 
     /** LISTE ET
      *
@@ -69,14 +73,21 @@ route::prefix('/TPA')->controller(\App\Http\Controllers\TPA_Controller::class)->
     /** PROFESSIONEL */
     Route::get('/pro_show-{pro}-{part}','pro_show')->name('pro_show');
 
-    /** MISSION */
-    Route::get('/mission_show','mission_show')->name('mission_show');
+    /** MISSION POUR PRO */
+    Route::get('/mission_show-{mission}-{pro}','mission_show')->name('mission_show');
+    Route::post('/mission_show-{mission}-{pro}','mission_show_process')->name('mission_show_process');
 
+    /** MISSION POUR PART */
+    Route::get('/mission_part-{mission}-{part}','mission_show_part')->name('mission_show_part');
+    Route::get('/mission_modify-{mission}-{part}','mission_modify')->name('mission_modify');
+    Route::post('/mission_modify-{mission}-{part}','mission_modify_process')->name('mission_modify_process');
     /** EXPERIENCE*/
     Route::get('/experience_show','experience_show')->name('experience_show');
 
-    /** EXPERIENCE */
+    /** Particulier */
     Route::get('/part_show-{pro}-{part}','part_show')->name('part_show');
+
+
 
 
 

@@ -22,6 +22,19 @@ class TPA_Controller extends Auth_Controller
         return view('TPA.Pages.accueil.guest');
     }
 
+    public function about()
+    {
+
+        return view('TPA.Pages.about');
+    }
+
+    public function contact()
+    {
+        return view('TPA.Pages.contact');
+    }
+
+
+
     public function accueil_part(particulier $part)
     {
         $exps = \App\Models\Experience::select('fonction')->distinct()->get();
@@ -98,11 +111,12 @@ class TPA_Controller extends Auth_Controller
             'qualification'=>$request->qualification,
             'statut'=>'en attente'
         ]);
-        dd( $mission->professionnel()->sync([$pro->id]));
-        $mission->particulier()->sync([$part->id]);
+        $mission->professionnel()->syncWithoutDetaching([$pro->id]);
+        $mission->particulier()->syncWithoutDetaching([$part->id]);
 
 
-       $mission->save();
+
+        $mission->save();
         //mise a jour du nombre de propositions recue/ envoyee chez tous les part et les usr
         DB::table('professionnels')
             ->update([
@@ -118,7 +132,7 @@ class TPA_Controller extends Auth_Controller
                                    JOIN missions m ON m.id = mpp.mission_id
                                    WHERE mpp.particulier_id = particuliers.id)')
             ]);
-        return to_route('TPA.accueil_pro',['pro'=>$pro])->with('message','Votre mission est desormais en attente ');
+        return to_route('TPA.mes_offres',['part'=>$part])->with('message','Votre mission est desormais en attente ');
     }
 
     /**
@@ -132,16 +146,41 @@ class TPA_Controller extends Auth_Controller
             ->where('mission_particulier_professionnel.particulier_id', $part->id)
             ->select('missions.*')
             ->get();
-        return view('TPA.Pages.mes_offres')->with(['missions'=>$missions,'part'=>$part]);
+
+        $missions_r = Mission::join('mission_particulier_professionnel', 'missions.id', '=', 'mission_particulier_professionnel.mission_id')
+            ->where('mission_particulier_professionnel.particulier_id', $part->id)
+            ->where('missions.statut', 'refusee')
+            ->select('missions.*')
+            ->get();
+
+        $missions_a = Mission::join('mission_particulier_professionnel', 'missions.id', '=', 'mission_particulier_professionnel.mission_id')
+            ->where('mission_particulier_professionnel.particulier_id', $part->id)
+            ->where('missions.statut', 'acceptee')
+            ->select('missions.*')
+            ->get();
+        return view('TPA.Pages.mes_offres')->with(['missions'=>$missions,'missions_r'=>$missions_r,'missions_a'=>$missions_a,'part'=>$part]);
     }
 
     public function mes_offres_recues( professionnel $pro)
     {
         $missions = Mission::join('mission_particulier_professionnel', 'missions.id', '=', 'mission_particulier_professionnel.mission_id')
             ->where('mission_particulier_professionnel.professionnel_id', $pro->id)
+            ->where('missions.statut', 'en attente')
             ->select('missions.*')
             ->get();
-        return view('TPA.Pages.mes_offres_recue')->with(['missions'=>$missions,'pro'=>$pro]);
+
+        $missions_r = Mission::join('mission_particulier_professionnel', 'missions.id', '=', 'mission_particulier_professionnel.mission_id')
+            ->where('mission_particulier_professionnel.professionnel_id', $pro->id)
+            ->where('missions.statut', 'refusee')
+            ->select('missions.*')
+            ->get();
+
+        $missions_a = Mission::join('mission_particulier_professionnel', 'missions.id', '=', 'mission_particulier_professionnel.mission_id')
+            ->where('mission_particulier_professionnel.professionnel_id', $pro->id)
+            ->where('missions.statut', 'acceptee')
+            ->select('missions.*')
+            ->get();
+        return view('TPA.Pages.mes_offres_recues')->with(['missions'=>$missions,'missions_r'=>$missions_r,'missions_a'=>$missions_a,'pro'=>$pro]);
     }
 
 
@@ -218,9 +257,61 @@ class TPA_Controller extends Auth_Controller
      * HOW DE LA MISSION
      */
 
-    PUBLIC function  mission_show()
+    PUBLIC function  mission_show( Mission $mission,professionnel $pro)
     {
-        return view('TPA.Pages.Show.mission');
+        return view('TPA.Pages.Show.mission_pro')->with(['mission'=>$mission]);
+    }
+
+    public function mission_show_process( Mission $mission ,professionnel $pro , Request $request)
+    {
+        $mission->update(['statut'=>$request->statut]);
+        $mission->update();
+        //mise a jour du nombre de propositions recue/ envoyee chez tous les part et les usr
+        DB::table('professionnels')
+            ->update([
+                'prop_acceptee' => DB::raw('(SELECT COUNT(*)
+                           FROM mission_particulier_professionnel mpp
+                           JOIN missions m ON m.id = mpp.mission_id
+                           WHERE mpp.professionnel_id = professionnels.id
+                           AND m.statut = "acceptee")')
+            ]);
+
+        DB::table('particuliers')
+            ->update([
+                'prop_acceptee' => DB::raw('(SELECT COUNT(*)
+                           FROM mission_particulier_professionnel mpp
+                           JOIN missions m ON m.id = mpp.mission_id
+                           WHERE mpp.particulier_id = particuliers.id
+                           AND m.statut = "acceptee")')
+            ]);
+        return redirect()->route('TPA.mes_offres_recues',['pro'=>$pro]);
+    }
+
+    /** MISSION POUR PRO */
+
+    public  function mission_show_part(Mission $mission , particulier $part )
+    {
+        return view('TPA.Pages.Show.mission_part')->with(['mission'=>$mission,'part'=>$part]);
+    }
+
+    public  function mission_modify(Mission $mission , particulier $part)
+    {
+        return view('TPA.Data.mission_modify')->with(['mission'=>$mission]);
+    }
+
+    public  function mission_modify_process(Mission $mission , particulier $part, Mission_Request $request)
+    {
+        $mission->update([
+            'intitule'=>$request->intitule,
+            'description'=> $request->description,
+            'debut'=>$request->debut,
+            'fin'=>$request->fin,
+            'fonction'=>$request->fonction,
+            'remuneration'=>$request->remuneration,
+            'desc_rem'=>$request->desc_rem,
+            'qualifiction'=>$request->qualification
+            ]);
+        return redirect()->route('TPA.mes_offres',['part'=>$part]);
     }
 
     /**

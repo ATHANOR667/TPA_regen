@@ -64,6 +64,7 @@
     overflow-x: auto;
     scrollbar-color: transparent;
     overflow-y: none;
+    width: max-content;
 }
 .divinfoprofile{
     width: 100%;
@@ -205,6 +206,13 @@ li{
     margin-bottom: 10px;
     padding: 9px;
 }
+.sousbloc8{
+    border: solid 2px #000;
+    width: 100%;
+    height: 50px;
+    margin-bottom: 10px;
+    padding: 9px;
+}
 .block4{
     display: flex;
     flex-direction: column;
@@ -247,3 +255,44 @@ li{
     animation: fadeIn 1s ease forwards;
 }
 
+
+
+
+
+.container8 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Afficher les enfants par ligne de 3 */
+}
+
+.block8 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: scroll; /* Permettre le défilement horizontal des enfants */
+    scrollbar-color: transparent;
+    overflow-y: hidden; /* Empêcher le défilement vertical du parent */
+    width: max-content;
+    white-space: nowrap; /* Empêcher le retour à la ligne des enfants */
+}
+
+.block8 > * {
+    margin: 10px; /* Ajouter une marge entre les enfants */
+}
+
+.about-content {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.about-content h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.about-content p {
+    margin-bottom: 15px;
+}
