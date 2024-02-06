@@ -56,7 +56,7 @@
                         <div class="divchoix"><h3 class="element">Intitule : {{$mission_r->intitule}}</h3></div>
                         <div class="divchoix"><h3 class="element">Fonction : {{$mission_r->fonction}}</h3></div>
                         <div class="divchoix"><h3 class="element">Remuneration : {{$mission_r->remuneration}}</h3></div>
-                        <div class="divchoix"><a class="menu btnaffplus" href="{{route('TPA.mission_show_part',['mission'=>$mission,'part'=>$part])}}" class="element">Afficher plus</a></div>
+                        <div class="divchoix"><a class="menu btnaffplus" href="{{route('TPA.mission_show_part',['mission'=>$mission_r,'part'=>$part])}}" class="element">Afficher plus</a></div>
                     </div>
 
                 @endforeach
@@ -72,7 +72,7 @@
                         <div class="divchoix"><h3 class="element">Fonction : {{$mission_a->fonction}}</h3></div>
                         <div class="divchoix"><h3 class="element">Remuneration : {{$mission_a->remuneration}}</h3></div>
                         <div class="divchoix"><h3 class="element">Remuneration : {{$mission_a->remuneration}}</h3></div>
-                        <div class="divchoix"><a class="menu btnaffplus" href="{{route('TPA.mission_show_part',['mission'=>$mission,'part'=>$part])}}" class="element">Afficher plus</a></div>
+                        <div class="divchoix"><a class="menu btnaffplus" href="{{route('TPA.mission_show_part',['mission'=>$mission_a,'part'=>$part])}}" class="element">Afficher plus</a></div>
                     </div>
 
                 @endforeach

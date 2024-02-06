@@ -153,6 +153,7 @@ class TPA_Controller extends Auth_Controller
     {
         $missions = Mission::join('mission_particulier_professionnel', 'missions.id', '=', 'mission_particulier_professionnel.mission_id')
             ->where('mission_particulier_professionnel.particulier_id', $part->id)
+            ->where('missions.statut', 'en attente')
             ->select('missions.*')
             ->get();
 
