@@ -32,6 +32,16 @@ class TPA_Controller extends Auth_Controller
         return view('TPA.Pages.contact')->with(['part'=>$user,'pro'=>$user,'user'=>$user]);
     }
 
+    public function about_guest()
+    {
+        return view('TPA.Pages.about_guest');
+    }
+
+    public function contact_guest()
+    {
+        return view('TPA.Pages.contact_guest');
+    }
+
 
 
     public function accueil_part(particulier $part)

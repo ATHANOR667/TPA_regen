@@ -29,6 +29,9 @@ route::prefix('/TPA')->controller(\App\Http\Controllers\TPA_Controller::class)->
     Route::get('/about-{user}','about')->name('about');
     Route::get('/contact-{user}','contact')->name('contact');
 
+    Route::get('/about','about_guest')->name('about_guest');
+    Route::get('/contact','contact_guest')->name('contact_guest');
+
 
     /** CONNEXIONS */
     Route::get('/login','login')->name('login');
