@@ -296,3 +296,8 @@ li{
 .about-content p {
     margin-bottom: 15px;
 }
+.logo {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}

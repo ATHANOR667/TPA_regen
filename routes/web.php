@@ -26,8 +26,8 @@ route::prefix('/TPA')->controller(\App\Http\Controllers\TPA_Controller::class)->
 
     /** ABOUT ET CONTACT  */
 
-    Route::get('/about','about')->name('about');
-    Route::get('/contact','contact')->name('contact');
+    Route::get('/about-{user}','about')->name('about');
+    Route::get('/contact-{user}','contact')->name('contact');
 
 
     /** CONNEXIONS */

@@ -22,15 +22,14 @@ class TPA_Controller extends Auth_Controller
         return view('TPA.Pages.accueil.guest');
     }
 
-    public function about()
+    public function about(professionnel | particulier | null |string $user)
     {
-
-        return view('TPA.Pages.about');
+        return view('TPA.Pages.about')->with(['part'=>$user,'pro'=>$user,'user'=>$user]);
     }
 
-    public function contact()
+    public function contact(professionnel | particulier | null |string $user)
     {
-        return view('TPA.Pages.contact');
+        return view('TPA.Pages.contact')->with(['part'=>$user,'pro'=>$user,'user'=>$user]);
     }
 
 
