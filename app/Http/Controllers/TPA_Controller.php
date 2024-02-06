@@ -151,6 +151,7 @@ class TPA_Controller extends Auth_Controller
 
     public function mes_offres( particulier $part)
     {
+
         $missions = Mission::join('mission_particulier_professionnel', 'missions.id', '=', 'mission_particulier_professionnel.mission_id')
             ->where('mission_particulier_professionnel.particulier_id', $part->id)
             ->where('missions.statut', 'en attente')
@@ -190,6 +191,7 @@ class TPA_Controller extends Auth_Controller
             ->where('missions.statut', 'acceptee')
             ->select('missions.*')
             ->get();
+
         return view('TPA.Pages.mes_offres_recues')->with(['missions'=>$missions,'missions_r'=>$missions_r,'missions_a'=>$missions_a,'pro'=>$pro]);
     }
 

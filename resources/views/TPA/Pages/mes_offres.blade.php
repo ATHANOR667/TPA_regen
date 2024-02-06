@@ -1,3 +1,4 @@
+@php use App\Models\professionnel; @endphp
 @extends('TPA.base')
 
 @section('nav')
@@ -66,6 +67,15 @@
 
             <div class="block8" >
                 @foreach($missions_a as $mission_a)
+                    @php
+                        $tel =  Professionnel::join('mission_particulier_professionnel', 'professionnels.id', '=', 'mission_particulier_professionnel.professionnel_id')
+                              ->join('missions', 'missions.id', '=', 'mission_particulier_professionnel.mission_id')
+                              ->where('missions.id', $mission_a->id)
+                              ->where('mission_particulier_professionnel.particulier_id', $part->id)
+                              ->where('missions.statut', 'acceptee')
+                              ->select('professionnels.num_tel')
+                              ->first();
+                    @endphp
                     <div>
                         <div class="divchoix"><h2 class="element">Mission acceptee</h2></div>
                         <div class="divchoix"><h3 class="element">Intitule : {{$mission_a->intitule}}</h3></div>

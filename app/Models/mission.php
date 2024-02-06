@@ -10,9 +10,9 @@ class Mission extends Model
     protected $fillable = ['intitule','description','debut','fin','fonction','remuneration','desc_rem','qualification','statut'];
     use HasFactory;
 
-    function professionnel()
+    public function professionnels()
     {
-        return $this->belongsToMany(professionnel::class,'mission_particulier_professionnel');
+        return $this->belongsToMany(Professionnel::class, 'mission_particulier_professionnel');
     }
     function particulier()
     {
