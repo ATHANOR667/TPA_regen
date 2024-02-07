@@ -84,8 +84,14 @@ route::prefix('/TPA')->controller(\App\Http\Controllers\TPA_Controller::class)->
     Route::get('/mission_part-{mission}-{part}','mission_show_part')->name('mission_show_part');
     Route::get('/mission_modify-{mission}-{part}','mission_modify')->name('mission_modify');
     Route::post('/mission_modify-{mission}-{part}','mission_modify_process')->name('mission_modify_process');
-    /** EXPERIENCE*/
-    Route::get('/experience_show','experience_show')->name('experience_show');
+
+    /** EXPERIENCE POUR PART*/
+    Route::get('/exp_show-{exp}','exp_show_part')->name('experience_show');
+
+    /** EXPERIENCE POUR PRO */
+    Route::get('/exp_pro-{exp}-{pro}','exp_show_pro')->name('exp_show_pro');
+    Route::get('/exp_modify-{exp}-{pro}','exp_modify')->name('exp_modify');
+    Route::post('/exp_modify-{exp}-{pro}','exp_modify_process')->name('exp_modify_process');
 
     /** Particulier */
     Route::get('/part_show-{pro}-{part}','part_show')->name('part_show');

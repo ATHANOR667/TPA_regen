@@ -37,7 +37,7 @@
                 <div class="divchoix"><h2 class="element">Fonction : {{$exp->fonction}}</h2></div>
                 <div class="divchoix"><h3 class="element">De: {{$exp->debut}}</h3></div>
                 <div class="divchoix"><h3 class="element">A: {{$exp->fin}}</h3></div>
-                <div class="divchoix"><a  href="{{route('TPA.experience_show',['pro'=>$pro])}}" class="element">Afficher plus</a></div>
+                <div class="divchoix"><a  href="{{route('TPA.exp_show_pro',['exp'=>$exp,'pro'=>$pro])}}" class="element">Afficher plus</a></div>
             @endforeach
         </div>
         <div class="block2">

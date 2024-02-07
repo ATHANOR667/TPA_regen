@@ -332,9 +332,32 @@ class TPA_Controller extends Auth_Controller
      * SHOW DE L'experience
      */
 
-    PUBLIC function  experience_show()
+    public function  exp_show_part(Experience $exp)
     {
-        return view('TPA.Pages.Show.experience');
+        return view('TPA.Pages.Show.exp')->with(['exp'=>$exp]);
+    }
+
+    public function  exp_show_pro(Experience $exp, professionnel $pro)
+    {
+        return view('TPA.Pages.Show.exp_pro')->with(['exp'=>$exp,'pro'=>$pro]);
+    }
+
+    public function exp_modify(Experience $exp, professionnel $pro)
+    {
+        return view('TPA.Data.exp_modify')->with(['exp'=>$exp,'pro'=>$pro]);
+    }
+
+    public function exp_modify_process( Experience $exp, professionnel $pro ,Experience_Request $request)
+    {
+        $exp->update([
+            'fonction'=>$request->fonction,
+            'debut'=>$request->debut,
+            'fin'=>$request->fin,
+            'remuneration'=>$request->remuneration,
+            'desc_rem'=>$request->desc_rem,
+            'qualifiction'=>$request->qualification
+        ]);
+        return redirect()->route('TPA.exp_show_pro',['exp'=>$exp,'pro'=>$pro])->with('message','Modification effectuee avec success');
     }
 }
 
